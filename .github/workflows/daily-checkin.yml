@@ -1,6 +1,7 @@
 name: Daily Check-in
 
 on:
+  # 定时触发
   schedule:
     - cron: '30 16 * * *'
   
