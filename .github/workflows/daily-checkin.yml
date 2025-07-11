@@ -1,9 +1,8 @@
 name: Daily Check-in
 
 on:
-  # 每天北京时间0点5分执行 (UTC时间16点5分)
   schedule:
-    - cron: '0 17 * * *'
+    - cron: '30 16 * * *'
   
   # 允许手动触发
   workflow_dispatch:
