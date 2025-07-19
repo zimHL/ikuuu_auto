@@ -96,7 +96,7 @@ def checkin(cookie):
             print_with_time(f"✅ 签到成功: {data['msg']}")
             return True
         elif "已经签到" in data.get('msg', ''):
-            print_with_time(f"ℹ️  今日已签到: {data['msg']}")
+            print_with_time(f"ℹ️ 今日已签到: {data['msg']}")
             return True
         else:
             print_with_time(f"❌ 签到失败: {data['msg']}")
