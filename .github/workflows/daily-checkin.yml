@@ -30,4 +30,5 @@ jobs:
       run: python ./main.py
       env:
         TZ: 'Asia/Shanghai'
-        COOKIE_DATA: ${{ secrets.COOKIE_DATA }}
+        IKUUU_EMAIL: ${{ secrets.IKUUU_EMAIL }}
+        IKUUU_PASSWORD: ${{ secrets.IKUUU_PASSWORD }}
