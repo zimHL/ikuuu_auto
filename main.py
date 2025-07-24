@@ -26,7 +26,7 @@ def login_and_get_cookie():
     session = requests.Session()
     
     # 首先访问登录页面获取必要的信息
-    login_page_url = "https://ikuuu.ch/auth/login"
+    login_page_url = f"{BASE_URL}/auth/login"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0'
     }
@@ -52,10 +52,10 @@ def login_and_get_cookie():
             login_data['_token'] = csrf_token
         
         # 发送登录请求
-        login_url = "https://ikuuu.ch/auth/login"
+        login_url = f"{BASE_URL}/auth/login"
         headers.update({
-            'Origin': 'https://ikuuu.ch',
-            'Referer': 'https://ikuuu.ch/auth/login',
+            'Origin': BASE_URL,
+            'Referer': f"{BASE_URL}/auth/login",
             'Content-Type': 'application/x-www-form-urlencoded'
         })
         
@@ -85,11 +85,11 @@ def login_and_get_cookie():
 def checkin(cookie):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0',
-        'Origin': 'https://ikuuu.ch',
-        'Referer': 'https://ikuuu.ch/user',
+        'Origin': BASE_URL,
+        'Referer': f"{BASE_URL}/user",
         'Cookie': cookie
     }
-    url = "https://ikuuu.ch/user/checkin"
+    url = f"{BASE_URL}/user/checkin"
     
     try:
         response = requests.post(url, headers=headers)
