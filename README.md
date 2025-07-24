@@ -118,55 +118,6 @@ schedule:
 ============================================================
 ```
 
-## 🔧 工作流配置详解
-
-### 文件结构
-
-```
-.github/
-└── workflows/
-    └── daily-checkin.yml
-```
-
-### 完整配置文件
-
-```yaml
-name: Daily Check-in
-
-on:
-  # 定时触发 - 每天北京时间 00:30
-  schedule:
-    - cron: '30 16 * * *'
-  
-  # 允许手动触发
-  workflow_dispatch:
-
-jobs:
-  checkin:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests beautifulsoup4
-    
-    - name: Run check-in script
-      run: python ./main.py
-      env:
-        TZ: 'Asia/Shanghai'
-        IKUUU_EMAIL: ${{ secrets.IKUUU_EMAIL }}
-        IKUUU_PASSWORD: ${{ secrets.IKUUU_PASSWORD }}
-```
-
 ### 配置说明
 
 | 配置项 | 说明 |
@@ -225,68 +176,7 @@ Actions → Daily Check-in → Run workflow
 Settings → Secrets → IKUUU_EMAIL / IKUUU_PASSWORD
 
 # 确认账户状态
-手动登录 ikuuu.one 网站验证
-```
-
-#### 3. 依赖安装失败
-
-**可能原因**：
-- PyPI 服务不稳定
-- 网络连接问题
-
-**解决方案**：
-```yaml
-# 在 workflow 中添加重试机制
-- name: Install dependencies
-  run: |
-    python -m pip install --upgrade pip
-    pip install --retries 3 --timeout 30 requests beautifulsoup4
-```
-
-## 📈 高级配置
-
-### 多账户支持
-
-如需支持多个账户，可以创建多个 Secrets：
-
-```yaml
-# 账户1
-IKUUU_EMAIL_1: ${{ secrets.IKUUU_EMAIL_1 }}
-IKUUU_PASSWORD_1: ${{ secrets.IKUUU_PASSWORD_1 }}
-
-# 账户2  
-IKUUU_EMAIL_2: ${{ secrets.IKUUU_EMAIL_2 }}
-IKUUU_PASSWORD_2: ${{ secrets.IKUUU_PASSWORD_2 }}
-```
-
-### 通知集成
-
-添加微信、邮件等通知功能：
-
-```yaml
-- name: Send notification
-  if: failure()
-  run: |
-    curl -X POST "https://api.example.com/notify" \
-    -d "message=签到失败，请检查日志"
-```
-
-### 结果持久化
-
-将签到结果保存到文件：
-
-```yaml
-- name: Save results
-  run: |
-    echo "$(date): 签到完成" >> checkin_history.txt
-    
-- name: Commit results
-  run: |
-    git config --local user.email "action@github.com"
-    git config --local user.name "GitHub Action"
-    git add checkin_history.txt
-    git commit -m "Update checkin history" || exit 0
-    git push
+手动登录当前配置的域名网站验证
 ```
 
 ## 📞 支持与反馈
