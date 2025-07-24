@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import re
 import os
 from datetime import datetime
 
@@ -109,52 +108,6 @@ def checkin(cookie):
         print_with_time(f"❌ 签到请求失败: {str(e)}")
         return False
 
-def get_user_traffic(cookie):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0',
-        'Origin': 'https://ikuuu.ch',
-        'Referer': 'https://ikuuu.ch/user/code',
-        'Cookie': cookie
-    }
-    url = "https://ikuuu.ch/user"
-    
-    try:
-        response = requests.get(url, headers=headers)
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        # 查找剩余流量信息
-        traffic_cards = soup.find_all('div', class_='card-statistic-2')
-        
-        print_with_time("📊 流量使用情况:")
-        print("=" * 50)
-        
-        for card in traffic_cards:
-            header = card.find('h4')
-            if header and '剩余流量' in header.text:
-                # 提取剩余流量数值
-                body = card.find('div', class_='card-body')
-                if body:
-                    remaining_traffic = re.sub(r'\s+', ' ', body.get_text(strip=True))
-                    print(f"📈 剩余流量: {remaining_traffic}")
-                
-                # 提取今日已用流量
-                stats = card.find('div', class_='card-stats-title')
-                if stats:
-                    today_used_text = re.sub(r'\s+', ' ', stats.get_text(strip=True))
-                    # 提取冒号后的数值部分
-                    match = re.search(r':\s*(.+)', today_used_text)
-                    if match:
-                        today_used = match.group(1).strip()
-                        print(f"📊 今日已用: {today_used}")
-                    else:
-                        print(f"📊 今日使用情况: {today_used_text}")
-        
-        print("=" * 50)
-        return soup
-    except Exception as e:
-        print_with_time(f"❌ 获取流量信息失败: {str(e)}")
-        return None
-
 if __name__ == "__main__":
     print("=" * 60)
     print_with_time(f"🚀 {BASE_DOMAIN.upper()} 自动签到程序启动")
@@ -169,9 +122,6 @@ if __name__ == "__main__":
     
     # 执行签到
     checkin(cookie_data)
-    
-    # 获取流量信息
-    get_user_traffic(cookie_data)
     
     print("=" * 60)
     print_with_time("✨ 程序执行完成")
