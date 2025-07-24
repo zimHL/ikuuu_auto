@@ -27,7 +27,7 @@ def login_and_get_cookie():
     session = requests.Session()
     
     # 首先访问登录页面获取必要的信息
-    login_page_url = f"{BASE_URL}/auth/login"
+    login_page_url = "https://ikuuu.ch/auth/login"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0'
     }
@@ -53,10 +53,10 @@ def login_and_get_cookie():
             login_data['_token'] = csrf_token
         
         # 发送登录请求
-        login_url = f"{BASE_URL}/auth/login"
+        login_url = "https://ikuuu.ch/auth/login"
         headers.update({
-            'Origin': BASE_URL,
-            'Referer': f"{BASE_URL}/auth/login",
+            'Origin': 'https://ikuuu.ch',
+            'Referer': 'https://ikuuu.ch/auth/login',
             'Content-Type': 'application/x-www-form-urlencoded'
         })
         
@@ -86,11 +86,11 @@ def login_and_get_cookie():
 def checkin(cookie):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0',
-        'Origin': BASE_URL,
-        'Referer': f"{BASE_URL}/user",
+        'Origin': 'https://ikuuu.ch',
+        'Referer': 'https://ikuuu.ch/user',
         'Cookie': cookie
     }
-    url = f"{BASE_URL}/user/checkin"
+    url = "https://ikuuu.ch/user/checkin"
     
     try:
         response = requests.post(url, headers=headers)
@@ -112,11 +112,11 @@ def checkin(cookie):
 def get_user_traffic(cookie):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0',
-        'Origin': BASE_URL,
-        'Referer': f"{BASE_URL}/user/code",
+        'Origin': 'https://ikuuu.ch',
+        'Referer': 'https://ikuuu.ch/user/code',
         'Cookie': cookie
     }
-    url = f"{BASE_URL}/user"
+    url = "https://ikuuu.ch/user"
     
     try:
         response = requests.get(url, headers=headers)
