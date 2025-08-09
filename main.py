@@ -11,7 +11,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # 域名配置
-BASE_DOMAIN = "ikuuu.ch"
+BASE_DOMAIN = "ikuuu.de"
 BASE_URL = f"https://{BASE_DOMAIN}"
 
 # 本地测试变量，本地测试时可以在这里设置，为空时使用环境变量
